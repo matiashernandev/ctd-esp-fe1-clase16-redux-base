@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Pokemon, PokemonWithProps } from "../types/pokemon.types";
-import { Sprite } from "../types/sprite.types";
+import { Pokemon } from "../types/pokemon.types";
 
-const pokemonMock: PokemonWithProps = {
+import { getPokemon } from "../queries/pokemon.queries";
+import { useQuery } from "react-query";
+
+/* const pokemonMock: PokemonWithProps = {
 	id: 4,
 	name: "Charmander",
 	url: "https://pokeapi.co/api/v2/pokemon/4/",
@@ -17,7 +19,7 @@ const pokemonMock: PokemonWithProps = {
 			},
 		},
 	} as Sprite,
-};
+}; */
 
 /**
  * Visualiza un pokemon seleccionado
@@ -35,20 +37,47 @@ const VistaPokemon = ({
 	//que almacene en un estado el componente seleccionado y con el name de dicho pokemon hacer el fetch dentro de este
 	//componente de vista
 
-	if (pokemonSeleccionado) {
+	/* if (pokemonSeleccionado) {
 		console.log(pokemonSeleccionado);
-	}
+	} */
+
+	const { data, refetch } = useQuery(
+		"queryPokemon",
+		() => getPokemon(pokemonSeleccionado?.name || ""),
+		{
+			initialData: {
+				id: 143,
+				name: "Snorlax",
+				url: "https://pokeapi.co/api/v2/pokemon/143/",
+				sprites: {
+					default:
+						"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/143.gif",
+					other: {
+						home: {
+							front_default:
+								"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/143.gif",
+						},
+					},
+				},
+			},
+		}
+	);
+
+	useEffect(() => {
+		if (pokemonSeleccionado) {
+			refetch();
+		}
+	}, [refetch, pokemonSeleccionado]);
+
+	console.log(data?.sprites.other.home.front_default);
 
 	//TODO id + sprites
 
-	return pokemonSeleccionado ? (
+	return data ? (
 		<div className="vistaPokemon">
-			<h4>Pokemon: {pokemonSeleccionado.name}</h4>
-			{/* <h5>#{pokemonSeleccionado.id}</h5> */}
-			<img
-				// src={pokemonSeleccionado.sprites.other.home.front_default}
-				alt={pokemonSeleccionado.name}
-			/>
+			<h4>Pokemon: {data?.name}</h4>
+			{/* <h5>#{data.id}</h5> */}
+			<img src={data?.sprites.other.home.front_default} alt={data.name} />
 		</div>
 	) : null;
 
