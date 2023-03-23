@@ -4,13 +4,17 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { store } from "./store/store";
+import { Provider } from "react-redux";
 
 const client = new QueryClient();
 
 ReactDOM.render(
 	<React.StrictMode>
 		<QueryClientProvider client={client}>
-			<App />
+			<Provider store={store}>
+				<App />
+			</Provider>
 		</QueryClientProvider>
 	</React.StrictMode>,
 	document.getElementById("root")

@@ -1,24 +1,16 @@
-import React, { useState } from "react";
-import { Pokemon } from "../types/pokemon.types";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setPokemonName } from "../store/slices/pokemonSlice";
 import ListadoPokemons from "./ListadoPokemons";
 import VistaPokemon from "./VistaPokemon";
 
 const BuscarPokemon = () => {
-	//Aqui deberemos almacenar en estados las entradas del usuario
 	const [inputPokemonName, setInputPokemonName] = useState("");
-	const [name, setName] = useState("");
-	const [pokemonSeleccionado, setPokemonSeleccionado] = useState<
-		Pokemon | undefined
-	>();
+
+	const dispatch = useDispatch();
 
 	const onBuscarClick = () => {
-		// Aqui debemos guardar la entrada del usuario
-		setName(inputPokemonName);
-		console.log(inputPokemonName);
-	};
-
-	const seleccionarPokemon = (pokemon: Pokemon) => {
-		setPokemonSeleccionado(pokemon);
+		dispatch(setPokemonName(inputPokemonName));
 	};
 
 	return (
@@ -35,9 +27,8 @@ const BuscarPokemon = () => {
 				<button onClick={() => onBuscarClick()}>Buscar</button>
 			</div>
 			<div style={{ display: "flex", flexDirection: "row" }}>
-				{/* ListadoPokemons debe recibir por props el name del pokemon a buscar */}
-				<ListadoPokemons name={name} seleccionarPokemon={seleccionarPokemon} />
-				<VistaPokemon pokemonSeleccionado={pokemonSeleccionado} />
+				<ListadoPokemons />
+				<VistaPokemon />
 			</div>
 		</>
 	);

@@ -1,42 +1,26 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {Pokemon} from "../types/pokemon.types";
-import {extractPokemonId} from "../services/pokemon.services";
-
-
+import { useDispatch } from "react-redux";
+import { extractPokemonId } from "../services/pokemon.services";
+import { setPokemonSelected } from "../store/slices/pokemonSlice";
+import { Pokemon } from "../types/pokemon.types";
 
 interface ListadoPokemonsItemProps {
-    pokemon: Pokemon,
-    seleccionarPokemon: (pokemon: Pokemon) => void
+	pokemon: Pokemon;
 }
 
-/**
- * Visualiza una pokemon con su nombre y url
- *
- * Ej:
- * <pre>
- *     <ListadoPokemonsItem pokemon={pokemon}
- *                             seleccionarPokemon={(pokemon) => {}}/>
- *
- * </pre>
- *
- * @author Digital House
- * @param pokemon el pokemon a mostrar
- * @param seleccionarPokemon una funcion que se ejecuta al hacer click en el pokemon y guarda en un estado el pokemon seleccionado
- */
-const ListadoPokemonsItem = ({ pokemon, seleccionarPokemon }: ListadoPokemonsItemProps) =>
-    <div onClick={() => seleccionarPokemon(pokemon)}>
-        <strong>{pokemon.name}</strong>
-        <small> #{extractPokemonId(pokemon.url)}</small>
-    </div>
+const ListadoPokemonsItem = ({ pokemon }: ListadoPokemonsItemProps) => {
+	const dispatch = useDispatch();
+	const handleClick = () => {
+		dispatch(setPokemonSelected(pokemon));
+	};
 
-
-ListadoPokemonsItem.propTypes = {
-    pokemon:
-        PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            url: PropTypes.string.isRequired,
-        })
+	return (
+		<div>
+			<div onClick={handleClick}>
+				<strong>{pokemon.name}</strong>
+				<small> #{extractPokemonId(pokemon.url)}</small>
+			</div>
+		</div>
+	);
 };
 
 export default ListadoPokemonsItem;
