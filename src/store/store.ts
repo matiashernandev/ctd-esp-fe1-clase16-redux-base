@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 import { pokemonSlice } from "./slices/pokemonSlice";
 
 export const store = configureStore({
