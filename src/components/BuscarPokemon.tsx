@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { setPokemonName } from "../store/slices/pokemonSlice";
+import { useAppDispatch } from "../store/hooks";
 import ListadoPokemons from "./ListadoPokemons";
 import VistaPokemon from "./VistaPokemon";
 
 const BuscarPokemon = () => {
 	const [inputPokemonName, setInputPokemonName] = useState("");
 
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const onBuscarClick = () => {
 		dispatch(setPokemonName(inputPokemonName));

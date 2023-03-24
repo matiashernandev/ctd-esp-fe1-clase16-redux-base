@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import ListadoPokemonsItem from "../components/ListadoPokemonsItem";
 import { buscarPokemons } from "../queries/pokemon.queries";
 import { extractPokemonId } from "../services/pokemon.services";
-import { RootState } from "../store/store";
+import { useAppSelector } from "../store/hooks";
 import { Pokemon } from "../types/pokemon.types";
 
 const ListadoPokemons = () => {
 	const [pokemons, setPokemons] = useState<Pokemon[] | null>(null);
 
-	const { name } = useSelector((state: RootState) => state.pokemon);
+	//const { name } = useSelector((state: RootState) => state.pokemon);
+	const { name } = useAppSelector((state) => state.pokemon);
 
 	useEffect(() => {
 		buscarPokemons(name).then((data) => {

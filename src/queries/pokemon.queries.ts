@@ -1,5 +1,5 @@
 import { Poke } from "../types/poke";
-import { Pokemon, PokemonWithProps } from "../types/pokemon.types";
+import { Pokemon } from "../types/pokemon.types";
 
 export const getPokemons = async (): Promise<Pokemon[]> => {
 	const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");

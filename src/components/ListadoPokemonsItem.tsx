@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
 import { extractPokemonId } from "../services/pokemon.services";
 import { setPokemonSelected } from "../store/slices/pokemonSlice";
+import { useAppDispatch } from "../store/store";
 import { Pokemon } from "../types/pokemon.types";
 
 interface ListadoPokemonsItemProps {
@@ -8,7 +8,7 @@ interface ListadoPokemonsItemProps {
 }
 
 const ListadoPokemonsItem = ({ pokemon }: ListadoPokemonsItemProps) => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const handleClick = () => {
 		dispatch(setPokemonSelected(pokemon));
 	};
